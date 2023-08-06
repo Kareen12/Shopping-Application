@@ -4,6 +4,9 @@ import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
+import PaymentSuccess from "./pages/PaymentSucces";
+import "./App.css";
+
 
 const App = () => {
   return (<div className=" bg-slate-100">
@@ -15,6 +18,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/cart" element={<Cart/>} />
+        <Route path="/paymentsuccess" element={<PaymentSuccess/>} />
       </Routes>
   </div>)
 };

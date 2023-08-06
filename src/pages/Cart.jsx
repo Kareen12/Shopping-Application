@@ -2,9 +2,47 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
 import {useState, useEffect} from "react";
-
+import axios from "axios";
+import Razorpay from  "razorpay";
 const Cart = () => {
 
+  const checkoutHandler = async () => {
+    const { data: { key }} = await axios.get("http://localhost:4000/api/getkey")
+
+    const { data:{order} } = await axios.post("http://localhost:4000/api/checkout", {
+      totalAmount
+    })
+    console.log(order);
+
+  const options = {
+    key,
+    amount: order.totalAmount,
+    currency: "INR",
+    name: "rpstylish",
+    description: "project error has been fuckes me",
+    image: "https://avatars.githubusercontent.com/u/25058652?v=4",
+    order_id: order.id,
+    callback_url: "http://localhost:4000/api/paymentVerification",
+    prefill: {
+        name: "Gaurav Kumar",
+        email: "gaurav.kumar@example.com",
+        contact: "9999999999"
+    },
+    notes: {
+        "address": "Razorpay Corporate Office"
+    },
+    theme: {
+        "color": "#121212"
+    }
+};
+const razor = new window.Razorpay(options);
+razor.open();
+}
+
+
+
+
+  
   const {cart} = useSelector( (state) => state);
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -37,9 +75,9 @@ const Cart = () => {
 
                     <div className="flex flex-col items-start gap-y-4">
                       <p className="text-[12px] text-green-700">Total Amount:
-                        <span className="font-semibold ml-1 text-green-700">${totalAmount} </span>
+                        <span className="font-semibold ml-1 text-green-700">Rs {totalAmount} </span>
                       </p>
-                      <button className="bg-green-700 text-white px-20 py-2 rounded-md">Checkout now</button>
+                      <button className="bg-green-700 text-white px-20 py-2 rounded-md" onClick={checkoutHandler}>Checkout now</button>
                     </div>
                   </div>
                   

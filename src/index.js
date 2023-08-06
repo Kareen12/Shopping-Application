@@ -13,9 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // We have to use provider hee for slice in redux and BrowserRouter for routes
 root.render(
   <BrowserRouter>  
+    
       <Provider store={store}>
             <App />
             <Toaster/>
-      </Provider>    
+      </Provider> 
+          
   </BrowserRouter>
 );
